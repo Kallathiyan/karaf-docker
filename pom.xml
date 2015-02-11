@@ -38,11 +38,14 @@
         <cxf.version>3.0.3</cxf.version>
         <jackson.version>2.5.1</jackson.version>
         <junit.version>4.12</junit.version>
+        <karaf.version>3.0.3</karaf.version>
     </properties>
 
     <modules>
         <module>api</module>
         <module>core</module>
+        <module>command</module>
+        <module>assembly</module>
     </modules>
 
     <scm>
@@ -112,6 +115,13 @@
                 <groupId>com.fasterxml.jackson.jaxrs</groupId>
                 <artifactId>jackson-jaxrs-json-provider</artifactId>
                 <version>${jackson.version}</version>
+            </dependency>
+
+            <!-- Karaf -->
+            <dependency>
+                <groupId>org.apache.karaf.shell</groupId>
+                <artifactId>org.apache.karaf.shell.console</artifactId>
+                <version>${karaf.version}</version>
             </dependency>
 
             <!-- JUnit Test -->

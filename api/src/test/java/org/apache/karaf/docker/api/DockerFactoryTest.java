@@ -103,10 +103,10 @@ public class DockerFactoryTest {
         Response stopResponse = docker.stopContainer(response.getId(), 30);
         System.out.println("\tStatus: " + stopResponse.getStatus());
         assertEquals(204, stopResponse.getStatus());
-        //System.out.println("Removing docker-karaf container ...");
-        //Response removeResponse = docker.removeContainer(response.getId(), true, true);
-        //System.out.println("\tStatus: " + removeResponse.getStatus());
-        //assertEquals(204, removeResponse.getStatus());
+        System.out.println("Removing docker-karaf container ...");
+        Response removeResponse = docker.removeContainer(response.getId(), true, true);
+        System.out.println("\tStatus: " + removeResponse.getStatus());
+        assertEquals(204, removeResponse.getStatus());
     }
 
 }

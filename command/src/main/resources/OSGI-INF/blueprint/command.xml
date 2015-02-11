@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+
+    <reference id="dockerService" interface="org.apache.karaf.docker.core.KarafDocker"/>
+
+    <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.1.0">
+        <command>
+            <action class="org.apache.karaf.docker.command.ListCommand">
+                <property name="docker" ref="dockerService"/>
+            </action>
+        </command>
+        <command>
+            <action class="org.apache.karaf.docker.command.BootstrapCommand">
+                <property name="docker" ref="dockerService"/>
+            </action>
+        </command>
+        <command>
+            <action class="org.apache.karaf.docker.command.ProvisionCommand">
+                <property name="docker" ref="dockerService"/>
+            </action>
+        </command>
+        <command>
+            <action class="org.apache.karaf.docker.command.DeleteCommand">
+                <property name="docker" ref="dockerService"/>
+            </action>
+        </command>
+        <command>
+            <action class="org.apache.karaf.docker.command.StartCommand">
+                <property name="docker" ref="dockerService"/>
+            </action>
+        </command>
+        <command>
+            <action class="org.apache.karaf.docker.command.StopCommand">
+                <property name="docker" ref="dockerService"/>
+            </action>
+        </command>
+        <command>
+            <action class="org.apache.karaf.docker.command.ConnectCommand"/>
+        </command>
+    </command-bundle>
+
+</blueprint>

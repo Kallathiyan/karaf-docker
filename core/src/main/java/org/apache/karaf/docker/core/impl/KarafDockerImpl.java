@@ -131,7 +131,7 @@ public class KarafDockerImpl implements KarafDocker {
         Map<String, List<Map<String, String>>> portBindings = new HashMap<String, List<Map<String, String>>>();
         List<Map<String, String>> portBinding = new LinkedList<>();
         Map<String, String> binding = new HashMap<>();
-        binding.put("0.0.0.0", "8101");
+        binding.put("0.0.0.0", "49153");
         portBinding.add(binding);
         portBindings.put("8101/tcp", portBinding);
         hostConfig.setPortBindings(portBindings);
@@ -186,6 +186,10 @@ public class KarafDockerImpl implements KarafDocker {
     }
 
     private void copy(File source, File destination) throws IOException {
+        if (source.getName().equals("docker")) {
+            // ignore inner docker
+            return;
+        }
         if (source.getName().equals("cache.lock")) {
             // ignore cache.lock file
             return;

@@ -19,9 +19,13 @@ package org.apache.karaf.docker.api;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Docker factory test.
@@ -56,16 +60,23 @@ public class DockerFactoryTest {
 
     @Test
     public void testDockerContainer() throws Exception {
-        List<Container> containers = docker.containers();
-        assertEquals(0, containers.size());
         System.out.println("Creating docker-karaf container ...");
         ContainerConfig config = new ContainerConfig();
         config.setTty(true);
-        config.setAttachStderr(false);
-        config.setAttachStdin(false);
-        config.setAttachStdout(false);
-        config.setImage("karaf:3.0.2");
-        config.setUser("karaf");
+        config.setAttachStderr(true);
+        config.setAttachStdin(true);
+        config.setAttachStdout(true);
+        config.setImage("karaf:3.0.3");
+        config.setHostname("docker");
+        config.setUser("");
+        config.setCmd(new String[]{"/bin/bash"});
+        config.setWorkingDir("");
+        config.setOpenStdin(true);
+        config.setStdinOnce(true);
+        Map<String, Map<String, String>> exposedPorts = new HashMap<String, Map<String, String>>();
+        Map<String, String> exposedPort = new HashMap<>();
+        exposedPorts.put("8101/tcp", exposedPort);
+        config.setExposedPorts(exposedPorts);
         CreateContainerResponse response = docker.createContainer(config, "docker-karaf");
         System.out.println("\tContainer ID: " + response.getId());
         System.out.println("\t(Warnings: " + response.getWarnings() + ")");
@@ -73,19 +84,29 @@ public class DockerFactoryTest {
         HostConfig hostConfig = new HostConfig();
         hostConfig.setPrivileged(false);
         hostConfig.setPublishAllPorts(false);
+        hostConfig.setBinds(new String[]{"/opt/apache-maven-3.2.5:/opt/maven"});
+        hostConfig.setNetworkMode("bridge");
+        hostConfig.setLxcConf(new String[]{});
+        Map<String, List<Map<String, String>>> portBindings = new HashMap<String, List<Map<String, String>>>();
+        List<Map<String, String>> portBinding = new LinkedList<>();
+        Map<String, String> binding = new HashMap<>();
+        binding.put("0.0.0.0", "8101");
+        portBinding.add(binding);
+        portBindings.put("8101/tcp", portBinding);
+        hostConfig.setPortBindings(portBindings);
         Response startResponse = docker.startContainer(response.getId(), hostConfig);
         System.out.println("\tStatus: " + startResponse.getStatus());
         assertEquals(204, startResponse.getStatus());
-        containers = docker.containers();
-        assertEquals(1, containers.size());
+        List<Container> containers = docker.containers(true);
+        assertTrue(containers.size() >= 1);
         System.out.println("Stopping docker-karaf container ...");
         Response stopResponse = docker.stopContainer(response.getId(), 30);
         System.out.println("\tStatus: " + stopResponse.getStatus());
         assertEquals(204, stopResponse.getStatus());
-        System.out.println("Removing docker-karaf container ...");
-        Response removeResponse = docker.removeContainer(response.getId(), true, true);
-        System.out.println("\tStatus: " + removeResponse.getStatus());
-        assertEquals(204, removeResponse.getStatus());
+        //System.out.println("Removing docker-karaf container ...");
+        //Response removeResponse = docker.removeContainer(response.getId(), true, true);
+        //System.out.println("\tStatus: " + removeResponse.getStatus());
+        //assertEquals(204, removeResponse.getStatus());
     }
 
 }

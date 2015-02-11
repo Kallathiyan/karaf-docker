@@ -19,6 +19,8 @@ package org.apache.karaf.docker.api;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Map;
+
 /**
  * Request to create a new docker.io container
  */
@@ -53,12 +55,12 @@ public class ContainerConfig {
     private String[] cmd;
     @JsonProperty("Image")
     private String image;
-    // volumes
     @JsonProperty("WorkingDir")
     private String workingDir;
     @JsonProperty("DisableNetwork")
     private boolean disableNetwork;
-    // exposed ports
+    @JsonProperty("ExposedPorts")
+    private Map<String, Map<String, String>> exposedPorts;
 
     public String getHostname() {
         return hostname;
@@ -186,6 +188,14 @@ public class ContainerConfig {
 
     public void setDisableNetwork(boolean disableNetwork) {
         this.disableNetwork = disableNetwork;
+    }
+
+    public Map<String, Map<String, String>> getExposedPorts() {
+        return exposedPorts;
+    }
+
+    public void setExposedPorts(Map<String, Map<String, String>> exposedPorts) {
+        this.exposedPorts = exposedPorts;
     }
 
 }

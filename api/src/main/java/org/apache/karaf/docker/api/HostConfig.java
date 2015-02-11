@@ -19,6 +19,7 @@ package org.apache.karaf.docker.api;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -28,9 +29,10 @@ public class HostConfig {
     private String[] binds;
     @JsonProperty("Links")
     private String[] links;
-    @JsonProperty("LxcConfg")
-    private Map<String, String> lxcConf;
-    // portBindings
+    @JsonProperty("LxcConf")
+    private String[] lxcConf;
+    @JsonProperty("PortBindings")
+    private Map<String, List<Map<String, String>>> portBindings;
     @JsonProperty("PublishAllPorts")
     private boolean publishAllPorts;
     @JsonProperty("Privileged")
@@ -39,6 +41,8 @@ public class HostConfig {
     private String[] dns;
     @JsonProperty("VolumesFrom")
     private String[] volumesFrom;
+    @JsonProperty("NetworkMode")
+    private String networkMode;
 
     public String[] getBinds() {
         return binds;
@@ -56,11 +60,11 @@ public class HostConfig {
         this.links = links;
     }
 
-    public Map<String, String> getLxcConf() {
+    public String[] getLxcConf() {
         return lxcConf;
     }
 
-    public void setLxcConf(Map<String, String> lxcConf) {
+    public void setLxcConf(String[] lxcConf) {
         this.lxcConf = lxcConf;
     }
 
@@ -94,6 +98,22 @@ public class HostConfig {
 
     public void setVolumesFrom(String[] volumesFrom) {
         this.volumesFrom = volumesFrom;
+    }
+
+    public String getNetworkMode() {
+        return networkMode;
+    }
+
+    public void setNetworkMode(String networkMode) {
+        this.networkMode = networkMode;
+    }
+
+    public Map<String, List<Map<String, String>>> getPortBindings() {
+        return portBindings;
+    }
+
+    public void setPortBindings(Map<String, List<Map<String, String>>> portBindings) {
+        this.portBindings = portBindings;
     }
 
 }

@@ -43,6 +43,8 @@ public class Container {
     private long sizeRw;
     @JsonProperty("SizeRootFS")
     private long sizeRootFs;
+    @JsonProperty("Names")
+    private List<String> names;
 
     public String getId() {
         return id;
@@ -106,6 +108,14 @@ public class Container {
 
     public void setSizeRootFs(long sizeRootFs) {
         this.sizeRootFs = sizeRootFs;
+    }
+
+    public List<String> getNames() {
+        return names;
+    }
+
+    public void setNames(List<String> names) {
+        this.names = names;
     }
 
 }

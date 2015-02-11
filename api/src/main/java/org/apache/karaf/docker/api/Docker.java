@@ -32,7 +32,7 @@ public interface Docker {
     Info info();
 
     @GET @Path("/containers/json")
-    List<Container> containers();
+    List<Container> containers(@QueryParam("all") boolean showAll);
 
     @POST @Path("/containers/create")
     CreateContainerResponse createContainer(ContainerConfig config, @QueryParam("name") String name);

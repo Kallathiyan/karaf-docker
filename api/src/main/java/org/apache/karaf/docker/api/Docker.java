@@ -18,6 +18,7 @@ package org.apache.karaf.docker.api;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -27,17 +28,22 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public interface Docker {
 
-    @GET
-    @Path("/info")
+    @GET @Path("/info")
     Info info();
 
     @GET @Path("/containers/json")
     List<Container> containers();
 
-    @POST @Path("/container/create")
+    @POST @Path("/containers/create")
     CreateContainerResponse createContainer(ContainerConfig config, @QueryParam("name") String name);
 
+    @DELETE @Path("/containers/{id}")
+    Response removeContainer(@PathParam("id") String id, @QueryParam("v") boolean removeVolumes, @QueryParam("force") boolean force);
+
     @POST @Path("/containers/{id}/start")
-    void startContainer(@PathParam("id") String containerId, HostConfig config);
+    Response startContainer(@PathParam("id") String id, HostConfig config);
+
+    @POST @Path("/containers/{id}/stop")
+    Response stopContainer(@PathParam("id") String id, @QueryParam("t") int timeToWait);
 
 }

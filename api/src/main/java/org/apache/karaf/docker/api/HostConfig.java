@@ -31,9 +31,13 @@ public class HostConfig {
     @JsonProperty("LxcConfg")
     private Map<String, String> lxcConf;
     // portBindings
+    @JsonProperty("PublishAllPorts")
     private boolean publishAllPorts;
+    @JsonProperty("Privileged")
     private boolean privileged;
+    @JsonProperty("Dns")
     private String[] dns;
+    @JsonProperty("VolumesFrom")
     private String[] volumesFrom;
 
     public String[] getBinds() {

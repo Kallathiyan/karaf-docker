@@ -28,15 +28,15 @@ import java.util.List;
 public class CreateContainerResponse {
 
     @JsonProperty("Id")
-    private int id;
+    private String id;
     @JsonProperty("Warnings")
     private List<String> warnings;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

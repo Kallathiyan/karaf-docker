@@ -27,7 +27,6 @@ import java.util.ArrayList;
 public class DockerFactory {
 
     public final static String DEFAULT_ADDRESS = "http://localhost:2375";
-    public final static String DEFAULT_FS_LOCATION = "/var/lib/docker/aufs/mnt";
 
     public static Docker createInstance() {
         return DockerFactory.createInstance(DEFAULT_ADDRESS);

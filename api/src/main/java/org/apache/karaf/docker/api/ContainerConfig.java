@@ -27,7 +27,7 @@ public class ContainerConfig {
 
     @JsonProperty("Hostname")
     private String hostname;
-    @JsonProperty("Hostname")
+    @JsonProperty("User")
     private String user;
     @JsonProperty("Memory")
     private long memory;

@@ -16,11 +16,50 @@
  */
 package org.apache.karaf.docker.core;
 
+import java.io.IOException;
+import java.util.Set;
+
 /**
  * Karaf Docker service
  */
 public interface KarafDocker {
 
+    public Set<String> docks();
+
+    /**
+     * Create a fresh Karaf instance in a docker volume, ready to be started in a docker.io container.
+     * It's a dock.
+     *
+     * @param name the name of the dock.
+     */
     public void bootstrap(String name);
+
+    /**
+     * Clone the current Karaf instance in a docker volume, ready to be started in a docker.io container.
+     *
+     * @param name the name of the dock.
+     */
+    public void provision(String name) throws IOException;
+
+    /**
+     * Delete a Karaf dock.
+     *
+     * @param name the name of the dock.
+     */
+    public void delete(String name);
+
+    /**
+     * Start a Karaf dock in a docker.io container.
+     *
+     * @param name the name of the dock.
+     */
+    public void start(String name);
+
+    /**
+     * Stop a Karaf dock and the corresponding docker.io container.
+     *
+     * @param name the name of the dock.
+     */
+    public void stop(String name);
 
 }

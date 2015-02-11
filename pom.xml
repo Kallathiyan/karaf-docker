@@ -42,6 +42,7 @@
 
     <modules>
         <module>api</module>
+        <module>core</module>
     </modules>
 
     <scm>
@@ -89,6 +90,19 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Karaf Docker -->
+            <dependency>
+                <groupId>org.apache.karaf.docker</groupId>
+                <artifactId>org.apache.karaf.docker.api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.karaf.docker</groupId>
+                <artifactId>org.apache.karaf.docker.core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- CXF RS -->
             <dependency>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-rt-rs-client</artifactId>
@@ -99,6 +113,8 @@
                 <artifactId>jackson-jaxrs-json-provider</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
+
+            <!-- JUnit Test -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>

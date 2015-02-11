@@ -19,17 +19,33 @@ package org.apache.karaf.docker.api;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 /**
- * docker.io container port
+ * Response of a docker.io container creation
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Port {
+public class CreateContainerResponse {
 
-    @JsonProperty("PrivatePort")
-    private int privatePort;
-    @JsonProperty("PublicPort")
-    private int publicPort;
-    @JsonProperty("Type")
-    private String type;
+    @JsonProperty("Id")
+    private int id;
+    @JsonProperty("Warnings")
+    private List<String> warnings;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<String> getWarnings() {
+        return warnings;
+    }
+
+    public void setWarnings(List<String> warnings) {
+        this.warnings = warnings;
+    }
 
 }
